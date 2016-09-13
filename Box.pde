@@ -1,12 +1,15 @@
 class Box implements Entity {
   PVector size;
   int sides = 0x3F;
-  public Box(int sX, int sY, int sZ, int sides) {
+  int num;
+  public Box(int sX, int sY, int sZ, int sides, int num) {
     stroke(0);
     size = new PVector(sX, sY, sZ);
     this.sides = sides;
+    this.num = num;
   }
   public void draw() {
+    stroke(0);
     if ((sides & 0x1) == 0x1) {
       beginShape();
       vertex(0, 0, 0);

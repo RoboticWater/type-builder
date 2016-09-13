@@ -2,21 +2,7 @@ public class TerrainTile implements Entity {
   float offset;
   TerrainTile[] ajnt = new TerrainTile[8]; //N NE E SE S SW W NW;
   float[] verts = {0, 0, 0, 0};
-  boolean renderQuad = true;
   int num;
-  public TerrainTile(float offset, TerrainTile n, TerrainTile ne, TerrainTile e, TerrainTile se,
-                     TerrainTile s, TerrainTile sw, TerrainTile w, TerrainTile nw) {
-    this.offset = offset;
-    ajnt[0] = n;
-    ajnt[1] = ne;
-    ajnt[2] = e;
-    ajnt[3] = se;
-    ajnt[4] = s;
-    ajnt[5] = sw;
-    ajnt[6] = w;
-    ajnt[7] = nw;
-    calcVerts(1);
-  }
   public TerrainTile(float offset, TerrainTile[] ajnt) {
     this.offset = offset;
     this.ajnt = ajnt;
@@ -25,6 +11,7 @@ public class TerrainTile implements Entity {
   }
   void draw() {
     if (renderQuad) {
+      stroke(0);
       beginShape();
       vertex(0, verts[3], 0);
       vertex(xScale, verts[0], 0);
@@ -32,8 +19,6 @@ public class TerrainTile implements Entity {
       vertex(0, verts[2], zScale);
       endShape(CLOSE);
     } else {
-      
-      
       stroke(255);
       line(xScale / 2, yScale, zScale / 2, xScale / 2, offset, zScale / 2);
     }
@@ -60,6 +45,6 @@ public class TerrainTile implements Entity {
     
   }
   public String toString() {
-    return "T[" + num + "]";
+    return "TerrTile[" + num + "]Off[" + offset + "]";
   }
 }

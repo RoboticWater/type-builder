@@ -6,6 +6,7 @@ ArrayList<Entity> entities = new ArrayList();
 HashMap<Character, int[]> keyMap = new HashMap();
 float xScale = 20, yScale = 20, zScale = 20;
 int[] cursor = {0, buildSpace.length - 1};
+boolean renderQuad = false;
 void setup() {
   size(640, 480, P3D);
   cam = new Camera(this, width / 2, 0, width, width / 2, height / 2, 0);
@@ -49,6 +50,8 @@ void keyPressed() {
       addBox(key); 
     } else if (int(key) > 47 && int(key) < 58) {
       addTerr(key);
+    } else if (key == ' ') {
+      renderQuad = !renderQuad;
     }
     if (keyCode == 8) {
       cursor[0]--;
@@ -105,7 +108,7 @@ void addBox(char k) {
     Box b = (Box)buildSpace[x][y][z + 1];
     b.sides &= ~(0x10);
   }
-  buildSpace[x][y][z] = new Box(20, 20, 20, sides);
+  buildSpace[x][y][z] = new Box(20, 20, 20, sides, cursor[0]);
   //entities.add(new Box(cursor[0] % buildSpace.length, 20 - cursor[1], -cursor[0] / buildSpace.length, 20, 20, 20));
 }
 void addTerr(char key) {
