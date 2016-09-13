@@ -39,9 +39,6 @@ public class TerrainTile implements Entity {
     }
   }
   void calcVerts(int step) {
-    //println(this + " " + offset);
-    //println((ajnt[0] != null ? ajnt[0].offset : 0), (ajnt[1] != null ? ajnt[1].offset : 0), (ajnt[2] != null ? ajnt[2].offset : 0),
-    //int(ajnt[0] != null), int(ajnt[1] != null), int(ajnt[2] != null));
     verts[0] = (offset + (ajnt[0] != null ? ajnt[0].offset : 0) + (ajnt[1] != null ? ajnt[1].offset : 0) + (ajnt[2] != null ? ajnt[2].offset : 0)) /
                 (1 + int(ajnt[0] != null) + int(ajnt[1] != null) + int(ajnt[2] != null));
     verts[1] = (offset + (ajnt[2] != null ? ajnt[2].offset : 0) + (ajnt[3] != null ? ajnt[3].offset : 0) + (ajnt[4] != null ? ajnt[4].offset : 0)) /
@@ -50,18 +47,14 @@ public class TerrainTile implements Entity {
                 (1 + int(ajnt[4] != null) + int(ajnt[5] != null) + int(ajnt[6] != null));
     verts[3] = (offset + (ajnt[6] != null ? ajnt[6].offset : 0) + (ajnt[7] != null ? ajnt[7].offset : 0) + (ajnt[0] != null ? ajnt[0].offset : 0)) /
                 (1 + int(ajnt[6] != null) + int(ajnt[7] != null) + int(ajnt[0] != null));
-    //println(verts);
-    //println("======");
     if (step > 0) {
       for (int i = 0; i < ajnt.length; i++) {
         if (ajnt[i] != null) {
           ajnt[i].ajnt[(i + 4) % ajnt.length] = this;
           ajnt[i].calcVerts(step - 1);
-          //println(ajnt[i].ajnt);
         }
       }
     }
-    //println(verts);
   }
   public void delete() {
     

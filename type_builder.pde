@@ -1,5 +1,6 @@
 import damkjer.ocd.*;
 Camera cam;
+PVector camTarg, camPos;
 Entity[][][] buildSpace = new Entity[16][16][16];
 ArrayList<Entity> entities = new ArrayList();
 HashMap<Character, int[]> keyMap = new HashMap();

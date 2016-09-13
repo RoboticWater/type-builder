@@ -1,19 +1,12 @@
 class Box implements Entity {
-  //PVector pos; 
   PVector size;
   int sides = 0x3F;
-  //public Box(int x, int y, int z, int sX, int sY, int sZ) {
-  //  pos = new PVector(x, y, z);
-  //  size = new PVector(sX, sY, sZ);
-  //}
   public Box(int sX, int sY, int sZ, int sides) {
     stroke(0);
     size = new PVector(sX, sY, sZ);
     this.sides = sides;
   }
   public void draw() {
-    //pushMatrix();
-    //translate(pos.x * xScale, pos.y * yScale, pos.z * zScale);
     if ((sides & 0x1) == 0x1) {
       beginShape();
       vertex(0, 0, 0);
@@ -62,7 +55,6 @@ class Box implements Entity {
       vertex(0, size.y, size.z);
       endShape(CLOSE);
     }
-    //popMatrix();
   }
   public void delete() {
     
