@@ -1,15 +1,31 @@
-public class TerrainTile implements Entity {
+public class TerrainTile extends Entity {
   float offset;
   TerrainTile[] ajnt = new TerrainTile[8]; //N NE E SE S SW W NW;
   float[] verts = {0, 0, 0, 0};
-  int num;
-  public TerrainTile(float offset, TerrainTile[] ajnt) {
-    this.offset = offset;
-    this.ajnt = ajnt;
+  public TerrainTile(int x, int y, int z, int key) {
+    boolean xb0 = x > 0;
+    boolean xlr = x % buildSpace.length < buildSpace.length - 1;
+    boolean zb0 = z > 0;
+    boolean zlr = z % buildSpace.length < buildSpace.length - 1;
+    ajnt = new TerrainTile[8]; 
+    if (xb0) {
+      if (buildSpace[x - 1][y][z] instanceof TerrainTile) ajnt[6] = (TerrainTile)buildSpace[x - 1][y][z];
+      if (zb0) if (buildSpace[x - 1][y][z - 1] instanceof TerrainTile) ajnt[7] = (TerrainTile)buildSpace[x - 1][y][z - 1];
+      if (zlr) if (buildSpace[x - 1][y][z + 1] instanceof TerrainTile) ajnt[5] = (TerrainTile)buildSpace[x - 1][y][z + 1];
+    }
+    if (xlr) {
+      if (buildSpace[x + 1][y][z] instanceof TerrainTile) ajnt[2] = (TerrainTile)buildSpace[x + 1][y][z];
+      if (zb0) if (buildSpace[x + 1][y][z - 1] instanceof TerrainTile) ajnt[1] = (TerrainTile)buildSpace[x + 1][y][z - 1];
+      if (zlr) if (buildSpace[x + 1][y][z + 1] instanceof TerrainTile) ajnt[3] = (TerrainTile)buildSpace[x + 1][y][z + 1];
+    }
+    if (zb0) if(buildSpace[x][y][z - 1] instanceof TerrainTile) ajnt[0] = (TerrainTile)buildSpace[x][y][z - 1];
+    if (zlr) if (buildSpace[x][y][z + 1] instanceof TerrainTile) ajnt[4] = (TerrainTile)buildSpace[x][y][z + 1];
+    offset = yScale + (key - 48) * -7;
     num = cursor[0];
     calcVerts(1);
   }
   void draw() {
+    strokeWeight(1);
     if (renderQuad) {
       stroke(0);
       beginShape();

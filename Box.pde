@@ -1,14 +1,12 @@
-class Box implements Entity {
+class Box extends SixSided {
   PVector size;
-  int sides = 0x3F;
-  int num;
-  public Box(int sX, int sY, int sZ, int sides, int num) {
-    stroke(0);
+  public Box(int x, int y, int z, int sX, int sY, int sZ, int sides) {
+    super(Box.class, x, y, z);
     size = new PVector(sX, sY, sZ);
-    this.sides = sides;
-    this.num = num;
+    num = cursor[0];
   }
   public void draw() {
+    strokeWeight(1);
     stroke(0);
     if ((sides & 0x1) == 0x1) {
       beginShape();
