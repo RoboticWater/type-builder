@@ -3,7 +3,7 @@ public class Tube extends SixSided {
     super(Tube.class, x, y, z);
   }
   public void draw() {
-    strokeWeight(2);
+    strokeWeight(3);
     stroke(255);
     if (sides == 0) {
       translate(xScale / 2, yScale / 2, zScale / 2);

@@ -2,7 +2,7 @@ public class TerrainTile extends Entity {
   float offset;
   TerrainTile[] ajnt = new TerrainTile[8]; //N NE E SE S SW W NW;
   float[] verts = {0, 0, 0, 0};
-  public TerrainTile(int x, int y, int z, int key) {
+  public TerrainTile(int x, int y, int z, float offset) {
     boolean xb0 = x > 0;
     boolean xlr = x % buildSpace.length < buildSpace.length - 1;
     boolean zb0 = z > 0;
@@ -20,7 +20,7 @@ public class TerrainTile extends Entity {
     }
     if (zb0) if(buildSpace[x][y][z - 1] instanceof TerrainTile) ajnt[0] = (TerrainTile)buildSpace[x][y][z - 1];
     if (zlr) if (buildSpace[x][y][z + 1] instanceof TerrainTile) ajnt[4] = (TerrainTile)buildSpace[x][y][z + 1];
-    offset = yScale + (key - 48) * -7;
+    this.offset = offset;
     num = cursor[0];
     calcVerts(1);
   }
