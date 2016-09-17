@@ -2,6 +2,7 @@ import net.java.games.input.*;
 import org.gamecontrolplus.*;
 import org.gamecontrolplus.gui.*;
 import damkjer.ocd.*;
+Trail t;
 ControlIO control;
 ControlDevice stick;
 Camera cam0, cam1;
@@ -17,7 +18,8 @@ void setup() {
   cam0 = new Camera(this, width / 2, 0, width, width / 2, height / 2, 0);
   cam1 = new Camera(this);
   control = ControlIO.getInstance(this);
-  stick = control.getMatchedDevice("GamepadLayout");
+  stick = control.getMatchedDevice("MacLayout");
+  t = new Trail();
   if (stick == null) {
     println("No suitable device configured");
     System.exit(-1); // End the program NOW!
@@ -73,7 +75,10 @@ void draw() {
       }
     }
   }
+  fill(#ff0000);
+  box(0, 0, 0);
   //println(frameRate);
+    t.draw();
 }
 void keyPressed() {
   int x = cursor[0] % buildSpace.length;
@@ -131,4 +136,21 @@ public void indicator() {
   rect(0, 0, xScale, yScale);
   popMatrix();
   fill(255);
+}
+
+PVector rotateVectY(PVector v, float angle) {
+  //Y
+  return new PVector(v.x * cos(angle) + v.y * 0 + v.z * sin(angle),
+                     v.x * 0 + v.y * 1 + v.z * 0,
+                     v.x * -sin(angle)+ v.y * 0 + v.z * cos(angle));
+}
+PVector rotateVectX(PVector v, float angle) {
+  return new PVector(v.x * 1 + v.y * 0 + v.z * 0,
+                     v.x * 0 + v.y * cos(angle) + v.z * -sin(angle),
+                     v.x * 0 + v.y * sin(angle) + v.z * cos(angle));
+}
+PVector rotateVectZ(PVector v, float angle) {
+  return new PVector(v.x * cos(angle)+ v.y * -sin(angle),
+                     v.x * sin(angle) + v.y * cos(angle),
+                     v.z * 1);
 }
