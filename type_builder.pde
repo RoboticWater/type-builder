@@ -18,7 +18,7 @@ void setup() {
   cam0 = new Camera(this, width / 2, 0, width, width / 2, height / 2, 0);
   cam1 = new Camera(this);
   control = ControlIO.getInstance(this);
-  stick = control.getMatchedDevice("MacLayout");
+  stick = control.getMatchedDevice("GamepadLayout");
   t = new Trail();
   if (stick == null) {
     println("No suitable device configured");
@@ -40,6 +40,7 @@ void draw() {
     cam1.dolly(7*stick.getSlider("MOVEY").getValue());
     cam1.truck(7*stick.getSlider("MOVEX").getValue());
     cam1.feed();
+    t.draw();
     if (!stick.getButton("BACK").pressed()) doCheck = true;
     if (stick.getButton("BACK").pressed() && doCheck) {
       build = true;
@@ -75,10 +76,7 @@ void draw() {
       }
     }
   }
-  fill(#ff0000);
-  box(0, 0, 0);
-  //println(frameRate);
-    t.draw();
+  println(frameRate);
 }
 void keyPressed() {
   int x = cursor[0] % buildSpace.length;

@@ -14,14 +14,25 @@ public class Trail {
     update();
     beginShape();
     for (int i = 0; i < posList.size(); i++) {
-      PVector offset = new PVector(-20, 0);
+      PVector offset = new PVector(-40 * sin(i * 0.1), 0);
       if (i % 3 == 0 || i > posList.size() - 3) {
         rotateVectX(offset, rotList.get(i).x);
         rotateVectY(offset, rotList.get(i).y);
         rotateVectZ(offset, rotList.get(i).z);
         offset.add(posList.get(i));
-        curveVertex(i * 10, i * 5, 0);
-        //curveVertex(offset.x, offset.y, offset.z);
+        curveVertex(offset.x, offset.y, offset.z);
+      }
+    }
+    endShape();
+    beginShape();
+    for (int i = 0; i < posList.size(); i++) {
+      PVector offset = new PVector(40 * sin(i * 0.1), 0);
+      if (i % 3 == 0 || i > posList.size() - 3) {
+        rotateVectX(offset, rotList.get(i).x);
+        rotateVectY(offset, rotList.get(i).y);
+        rotateVectZ(offset, rotList.get(i).z);
+        offset.add(posList.get(i));
+        curveVertex(offset.x, offset.y, offset.z);
       }
     }
     endShape();
@@ -33,9 +44,12 @@ public class Trail {
     rot.x = cam1.attitude()[1];
     rot.y = cam1.attitude()[0];
     rot.z = cam1.attitude()[2];
-    if (posList.size() != 0 && pos != posList.get(posList.size() - 1)) {
-      posList.add(pos);
-      rotList.add(rot);
+    if (posList.size() > 0 && pos != posList.get(posList.size() - 1)) {
+      posList.add(pos.get());
+      rotList.add(rot.get());
+    } else if (posList.size() == 0) {
+      posList.add(pos.get());
+      rotList.add(rot.get());
     }
   }
 }
