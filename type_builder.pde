@@ -2,9 +2,9 @@ import net.java.games.input.*;
 import org.gamecontrolplus.*;
 import org.gamecontrolplus.gui.*;
 import damkjer.ocd.*;
-Trail t;
 ControlIO control;
 ControlDevice stick;
+Player p;
 Camera cam0, cam1;
 PVector camTarg, camPos;
 Entity[][][] buildSpace = new Entity[16][16][16];
@@ -16,14 +16,14 @@ boolean renderQuad = false, build = true, doCheck = true;
 void setup() {
   size(640, 480, P3D);
   cam0 = new Camera(this, width / 2, 0, width, width / 2, height / 2, 0);
-  cam1 = new Camera(this);
+  cam1 = new Camera(this, width / 2, height / 2, width / 2, width / 2, height / 2, 0);
   control = ControlIO.getInstance(this);
   stick = control.getMatchedDevice("GamepadLayout");
-  t = new Trail();
   if (stick == null) {
     println("No suitable device configured");
     System.exit(-1); // End the program NOW!
   }
+   p = new Player();
 }
 void draw() {
   background(0);
@@ -36,11 +36,21 @@ void draw() {
       doCheck = false;
     }
   } else {
-    cam1.look(0.05 * stick.getSlider("LOOKX").getValue(), 0.05 * stick.getSlider("LOOKY").getValue());
-    cam1.dolly(7*stick.getSlider("MOVEY").getValue());
-    cam1.truck(7*stick.getSlider("MOVEX").getValue());
+    //cam1.look(0.05 * stick.getSlider("LOOKX").getValue(), 0.05 * stick.getSlider("LOOKY").getValue());
+    //cam1.dolly(7*stick.getSlider("MOVEY").getValue());
+    //cam1.truck(7*stick.getSlider("MOVEX").getValue());
+    p.draw();
+    PVector v = new PVector(0, 0, -320);
+    println(p.rot);
+    rotateVectX(v, p.rot.x);
+    //rotateVectX(offset, p.rot.y);
+    //rotateVectX(offset, p.rot.z);
+    println(v);
+    v.add(p.pos);
+    cam1.jump(v.x, v.y, v.z);
+    cam1.aim(p.pos.x, p.pos.y, p.pos.z);
     cam1.feed();
-    t.draw();
+    
     if (!stick.getButton("BACK").pressed()) doCheck = true;
     if (stick.getButton("BACK").pressed() && doCheck) {
       build = true;
@@ -76,7 +86,7 @@ void draw() {
       }
     }
   }
-  println(frameRate);
+  //println(frameRate);
 }
 void keyPressed() {
   int x = cursor[0] % buildSpace.length;
